@@ -1,0 +1,24 @@
+name: Build ESP8266
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: pip install platformio
+
+      - run: pio run
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: .pio/build/nodemcuv2/firmware.bin
